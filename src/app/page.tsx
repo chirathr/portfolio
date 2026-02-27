@@ -29,7 +29,7 @@ export default function Home() {
       <header
         className={cn(
           "fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300",
-          scrolled ? "bg-zinc-950/80 backdrop-blur-md border-b border-blue-500/20 shadow-lg" : "bg-transparent"
+          scrolled ? "bg-zinc-950/80 backdrop-blur-sm border-b border-blue-500/20 shadow-lg" : "bg-transparent"
         )}
       >
         <div className="mx-auto max-w-4xl px-6 md:px-12 flex items-center justify-between">
@@ -63,7 +63,7 @@ export default function Home() {
             <p className="text-sm md:text-base text-zinc-400 max-w-xl mb-8 leading-relaxed">
               {portfolioData.about.split('.')[0]}.
             </p>
-            <ul className="flex items-center gap-6 text-xl mb-8">
+            <ul className="flex items-center gap-6 text-xl">
               <li>
                 <a className="block hover:text-blue-400 transition-colors" href={portfolioData.personalInfo.github} target="_blank" rel="noreferrer">
                   <span className="sr-only">GitHub</span>
@@ -83,14 +83,6 @@ export default function Home() {
                 </a>
               </li>
             </ul>
-            <a
-              href="/resume.pdf"
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/40 transition-all font-medium text-sm tracking-wide"
-            >
-              View Resume <ExternalLink size={16} />
-            </a>
           </div>
 
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center text-zinc-500 gap-2">

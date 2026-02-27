@@ -3,6 +3,8 @@ import { useEffect, useRef } from "react";
 
 export function ParticleBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
+    const isScrollingRef = useRef(false);
+    const scrollTimeoutRef = useRef<NodeJS.Timeout>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -16,7 +18,19 @@ export function ParticleBackground() {
             canvas.height = window.innerHeight;
         };
         setCanvasSize();
+
+        const handleScroll = () => {
+            isScrollingRef.current = true;
+            if (scrollTimeoutRef.current) {
+                clearTimeout(scrollTimeoutRef.current);
+            }
+            scrollTimeoutRef.current = setTimeout(() => {
+                isScrollingRef.current = false;
+            }, 100);
+        };
+
         window.addEventListener("resize", setCanvasSize);
+        window.addEventListener("scroll", handleScroll, { passive: true });
 
         const particles: {
             x: number;
@@ -51,22 +65,24 @@ export function ParticleBackground() {
         let animationFrameId: number;
 
         const drawParticles = () => {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            if (!isScrollingRef.current) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            particles.forEach((particle) => {
-                ctx.beginPath();
-                ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
-                ctx.fillStyle = `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${particle.opacity})`; // Black and white theme
-                ctx.fill();
+                particles.forEach((particle) => {
+                    ctx.beginPath();
+                    ctx.arc(particle.x, particle.y, particle.size, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(${particle.color.r}, ${particle.color.g}, ${particle.color.b}, ${particle.opacity})`; // Black and white theme
+                    ctx.fill();
 
-                particle.x += particle.speedX;
-                particle.y += particle.speedY;
+                    particle.x += particle.speedX;
+                    particle.y += particle.speedY;
 
-                if (particle.x < 0) particle.x = canvas.width;
-                if (particle.x > canvas.width) particle.x = 0;
-                if (particle.y < 0) particle.y = canvas.height;
-                if (particle.y > canvas.height) particle.y = 0;
-            });
+                    if (particle.x < 0) particle.x = canvas.width;
+                    if (particle.x > canvas.width) particle.x = 0;
+                    if (particle.y < 0) particle.y = canvas.height;
+                    if (particle.y > canvas.height) particle.y = 0;
+                });
+            }
 
             animationFrameId = requestAnimationFrame(drawParticles);
         };
@@ -75,7 +91,9 @@ export function ParticleBackground() {
 
         return () => {
             window.removeEventListener("resize", setCanvasSize);
+            window.removeEventListener("scroll", handleScroll);
             cancelAnimationFrame(animationFrameId);
+            if (scrollTimeoutRef.current) clearTimeout(scrollTimeoutRef.current);
         };
     }, []);
 
