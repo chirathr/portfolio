@@ -42,6 +42,7 @@ export default function Home() {
               <li><a href="#experience" className="hover:text-blue-400 transition-colors">Experience</a></li>
               <li><a href="#skills" className="hover:text-blue-400 transition-colors">Skills</a></li>
               <li><a href="#projects" className="hover:text-blue-400 transition-colors">Projects</a></li>
+              <li><a href="#education" className="hover:text-blue-400 transition-colors">Education</a></li>
               <li><a href="#blog" className="hover:text-blue-400 transition-colors">Blog</a></li>
             </ul>
           </nav>
@@ -62,7 +63,7 @@ export default function Home() {
             <p className="text-sm md:text-base text-zinc-400 max-w-xl mb-8 leading-relaxed">
               {portfolioData.about.split('.')[0]}.
             </p>
-            <ul className="flex items-center gap-6 text-xl">
+            <ul className="flex items-center gap-6 text-xl mb-8">
               <li>
                 <a className="block hover:text-blue-400 transition-colors" href={portfolioData.personalInfo.github} target="_blank" rel="noreferrer">
                   <span className="sr-only">GitHub</span>
@@ -82,6 +83,14 @@ export default function Home() {
                 </a>
               </li>
             </ul>
+            <a
+              href="/resume.pdf"
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-blue-500/10 text-blue-300 border border-blue-500/20 hover:bg-blue-500/20 hover:border-blue-500/40 transition-all font-medium text-sm tracking-wide"
+            >
+              View Resume <ExternalLink size={16} />
+            </a>
           </div>
 
           <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center text-zinc-500 gap-2">
@@ -200,6 +209,28 @@ export default function Home() {
               </li>
             ))}
           </ul>
+        </section>
+
+        <section id="education" className="mb-24 scroll-mt-24">
+          <h2 className="text-md font-bold uppercase tracking-widest text-zinc-200 mb-8 flex items-center gap-4">
+            <span className="w-8 h-px bg-gradient-to-r from-blue-500/50 via-sky-500/50 to-indigo-500/50"></span> Education <span className="flex-grow h-px bg-zinc-800/50"></span>
+          </h2>
+          <SpotlightCard className="rounded-xl" color="rgba(255, 255, 255, 0.03)">
+            <Card className="p-6 sm:p-8">
+              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-start sm:items-center">
+                <header className="z-10 mt-1 text-sm font-semibold uppercase tracking-wide text-zinc-500 sm:w-1/4 shrink-0">
+                  {portfolioData.education.year}
+                </header>
+                <div className="z-10 sm:w-3/4">
+                  <h3 className="font-medium text-lg leading-snug text-zinc-200 font-sans mb-2">
+                    {portfolioData.education.degree}
+                  </h3>
+                  <p className="text-zinc-400 text-sm mb-2">{portfolioData.education.school}</p>
+                  <p className="text-zinc-500 text-xs font-mono">CGPA: {portfolioData.education.cgpa}</p>
+                </div>
+              </div>
+            </Card>
+          </SpotlightCard>
         </section>
 
         <section id="blog" className="mb-24 scroll-mt-24">
