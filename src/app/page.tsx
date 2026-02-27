@@ -85,10 +85,10 @@ export default function Home() {
             </ul>
           </div>
 
-          <div className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center text-zinc-500 gap-2">
+          <a href="#about" className="absolute bottom-12 left-1/2 -translate-x-1/2 animate-bounce flex flex-col items-center text-zinc-500 hover:text-blue-400 transition-colors gap-2 cursor-pointer focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 rounded-lg p-2">
             <span className="text-xs font-semibold tracking-widest uppercase">Scroll</span>
             <ChevronDown size={20} />
-          </div>
+          </a>
         </section>
 
         <section id="about" className="mb-24 scroll-mt-24">
@@ -178,9 +178,13 @@ export default function Home() {
                   <Card className="p-6 sm:p-8">
                     <div className="flex flex-col md:flex-row gap-6">
                       <div className="z-10 md:w-1/3 shrink-0">
-                        <div className="rounded-lg border-2 border-zinc-700/50 w-full aspect-video bg-zinc-900 flex items-center justify-center text-zinc-600 shadow-inner">
-                          <span className="text-xs uppercase font-bold tracking-wider">Preview Image</span>
-                        </div>
+                        {project.image ? (
+                          <img src={project.image} alt={project.title} className="rounded-lg border border-zinc-700/50 w-full aspect-video object-cover shadow-lg opacity-80 group-hover/link:opacity-100 transition-opacity" />
+                        ) : (
+                          <div className="rounded-lg border border-zinc-700/50 w-full aspect-video bg-zinc-900 flex items-center justify-center text-zinc-600 shadow-inner">
+                            <span className="text-xs uppercase font-bold tracking-wider">Preview Image</span>
+                          </div>
+                        )}
                       </div>
                       <div className="z-10 md:w-2/3">
                         <h3 className="font-medium text-lg leading-snug text-zinc-200 mb-3">
