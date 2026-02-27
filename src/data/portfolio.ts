@@ -128,24 +128,5 @@ export const portfolioData = {
                 "4 engineers, 3 mentee promotions, critical migrations, company-wide gateway ownership",
         },
     ],
-    blog: [
-        {
-            title: "Building Resilient Distributed Systems with Go",
-            date: "Oct 12, 2025",
-            link: "#",
-            readTime: "8 min read",
-        },
-        {
-            title: "Scaling Event-Driven Architectures using GCP Pub/Sub",
-            date: "Sep 28, 2025",
-            link: "#",
-            readTime: "6 min read",
-        },
-        {
-            title: "Lessons Learned Migrating from Monolithic to Microservices",
-            date: "Aug 15, 2025",
-            link: "#",
-            readTime: "10 min read",
-        },
-    ]
+    blog: [] as { title: string; date: string; link: string; readTime: string; }[]
 };
