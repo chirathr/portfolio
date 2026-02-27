@@ -254,6 +254,18 @@ export default function Home() {
         </section>
 
       </div>
+
+      <footer className="w-full mt-32 mb-12 text-center text-zinc-500 text-sm">
+        <p>
+          Looking for my old portfolio?{" "}
+          <a
+            href="/old/index.html"
+            className="text-blue-400/80 hover:text-blue-400 hover:underline transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-blue-500/50 rounded px-1"
+          >
+            View previous version (Archived)
+          </a>
+        </p>
+      </footer>
     </div>
   );
 }
