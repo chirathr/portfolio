@@ -9,7 +9,7 @@ export const portfolioData = {
         status: "Open to Opportunities",
     },
     about:
-        "Senior Engineer and Technical Lead with 7 years of experience designing distributed systems and platform infrastructure at scale. Built a multi-vendor integration platform handling hundreds of thousands of API calls/day across 6 platforms, reducing setup time by 95%. Progressed from Junior Engineer to Team Lead, mentoring 3 engineers to Senior-level promotions. Passionate about building resilient distributed systems and exploring AI/LLM experimentation to optimize developer workflows.",
+        "I build resilient distributed systems, developer-first APIs, and high-scale platform infrastructure. With 7 years of engineering experience, I've progressed from Junior Engineer to Team Lead—architecting multi-vendor platforms that rapidly process hundreds of thousands of daily operations. I'm deeply passionate about decoupling complex business logic, mentoring engineering teams, and exploring AI-driven workflows to multiply developer productivity.",
     experience: [
         {
             title: "Team Lead",
