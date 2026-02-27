@@ -87,7 +87,7 @@ export const portfolioData = {
             description:
                 "AI agent using Google Gemini API that generates configuration rules and Python code from natural language prompts. Context-aware injection of available data fields. Reduced rule creation time from hours to minutes.",
             link: "#",
-            image: "/projects/ai_rule_generation.png",
+            image: "/projects/ai_rule_generation.jpg",
             tech: ["Python", "Google Gemini API"],
         },
         {
@@ -95,7 +95,7 @@ export const portfolioData = {
             description:
                 "Side project built with Claude Code. Takes user details, equipment, and preferences to generate AI-powered personalized workout plans.",
             link: "#",
-            image: "/projects/ai_workout_planner.png",
+            image: "/projects/ai_workout_planner.jpg",
             tech: ["TypeScript", "Next.js", "AI Prompts"],
         },
     ],
