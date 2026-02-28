@@ -1,6 +1,6 @@
 import { getAllPostSlugs, getPostData } from "@/lib/blog";
-import { BackButton } from "@/components/ui/back-button";
 import Link from "next/link";
+import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -39,7 +39,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
                 {/* Navigation */}
                 <nav className="mb-12 flex items-center justify-between">
-                    <BackButton />
+                    <Link
+                        href="/"
+                        className="group flex items-center gap-2 text-sm font-semibold tracking-wide text-zinc-500 hover:text-blue-400 transition-colors uppercase"
+                    >
+                        <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
+                        Chirath R.
+                    </Link>
                     <Link
                         href="/blog"
                         className="text-sm font-semibold tracking-wide text-zinc-500 hover:text-blue-400 transition-colors uppercase"
@@ -53,7 +59,9 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
                     <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-zinc-200 mb-6 leading-tight">
                         {postData.title}
                     </h1>
-                    <div className="flex items-center gap-4 text-sm font-mono text-zinc-500">
+                    <div className="flex flex-wrap items-center gap-3 text-sm font-mono text-zinc-500">
+                        <span className="font-semibold text-zinc-300">Chirath R.</span>
+                        <span className="w-1 h-1 rounded-full bg-zinc-700"></span>
                         <time dateTime={postData.date}>{new Date(postData.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
                         <span className="w-1 h-1 rounded-full bg-zinc-700"></span>
                         <span>{postData.readTime}</span>
