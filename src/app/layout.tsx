@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: portfolioData.about,
 };
 
+import { NavigationTracker } from "@/components/ui/navigation-tracker";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -29,6 +31,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <NavigationTracker />
         {children}
       </body>
     </html>

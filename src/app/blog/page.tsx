@@ -18,7 +18,7 @@ export default function BlogArchive() {
 
                 {/* Navigation */}
                 <nav className="mb-12 flex items-center justify-between">
-                    <BackButton />
+                    <BackButton fallback="/" />
                     <Link
                         href="/"
                         className="text-sm font-semibold tracking-wide text-zinc-500 hover:text-blue-400 transition-colors uppercase"

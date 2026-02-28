@@ -2,24 +2,25 @@
 
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { useEffect, useState } from "react";
 
-export function BackButton() {
+export function BackButton({ fallback = "/" }: { fallback?: string }) {
     const router = useRouter();
+    const [hasHistory, setHasHistory] = useState(false);
+
+    useEffect(() => {
+        const pagesViewed = parseInt(sessionStorage.getItem("pagesViewed") || "0");
+        if (pagesViewed > 1) {
+            setHasHistory(true);
+        }
+    }, []);
 
     const handleBack = () => {
-        // If the user arrived from outside the site (no referrer or external referrer),
-        // fallback to safely routing them to the blog index instead of kicking them off the site.
-        if (typeof window !== "undefined") {
-            const referrer = document.referrer;
-            if (!referrer || !referrer.includes(window.location.host)) {
-                router.push("/");
-                return;
-            }
+        if (hasHistory) {
+            router.back();
+        } else {
+            router.push(fallback);
         }
-
-        // Otherwise, they navigated here from within the site (Homepage or Archive),
-        // so `back()` safely returns them exactly whence they came.
-        router.back();
     };
 
     return (
