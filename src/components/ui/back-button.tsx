@@ -2,21 +2,11 @@
 
 import { useRouter } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
-import { useEffect, useState } from "react";
-
 export function BackButton({ fallback = "/" }: { fallback?: string }) {
     const router = useRouter();
-    const [hasHistory, setHasHistory] = useState(false);
-
-    useEffect(() => {
-        const pagesViewed = parseInt(sessionStorage.getItem("pagesViewed") || "0");
-        if (pagesViewed > 1) {
-            setHasHistory(true);
-        }
-    }, []);
 
     const handleBack = () => {
-        if (hasHistory) {
+        if (typeof window !== "undefined" && window.history.length > 1) {
             router.back();
         } else {
             router.push(fallback);
