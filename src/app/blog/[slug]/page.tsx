@@ -1,6 +1,6 @@
 import { getAllPostSlugs, getPostData } from "@/lib/blog";
+import { BackButton } from "@/components/ui/back-button";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
 
 export async function generateStaticParams() {
@@ -38,13 +38,13 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
             <div className="mx-auto max-w-3xl px-6 py-12 md:py-24 relative z-10">
 
                 {/* Navigation */}
-                <nav className="mb-12">
+                <nav className="mb-12 flex items-center justify-between">
+                    <BackButton />
                     <Link
-                        href="/#blog"
-                        className="group flex items-center gap-2 text-sm font-semibold tracking-wide text-zinc-500 hover:text-blue-400 transition-colors uppercase"
+                        href="/blog"
+                        className="text-sm font-semibold tracking-wide text-zinc-500 hover:text-blue-400 transition-colors uppercase"
                     >
-                        <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
-                        Back to Portfolio
+                        All Posts
                     </Link>
                 </nav>
 

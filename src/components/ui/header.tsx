@@ -15,6 +15,19 @@ export function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
+    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+        // Only override default jump behavior if we are currently on the homepage
+        if (window.location.pathname === '/') {
+            e.preventDefault();
+            const element = document.getElementById(id);
+            if (element) {
+                element.scrollIntoView({ behavior: 'smooth' });
+                // Update URL cleanly without jumping
+                window.history.pushState({}, '', `/#${id}`);
+            }
+        }
+    };
+
     return (
         <header
             className={cn(
@@ -23,17 +36,27 @@ export function Header() {
             )}
         >
             <div className="mx-auto max-w-4xl px-6 md:px-12 flex items-center justify-between">
-                <Link href="/" className="text-xl font-bold tracking-tight text-zinc-200">
+                <Link href="/" className="text-xl font-bold tracking-tight text-zinc-200" onClick={(e) => {
+                    if (window.location.pathname === '/') {
+                        e.preventDefault();
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
+                }}>
                     {portfolioData.personalInfo.name}
                 </Link>
                 <nav className="hidden sm:block">
                     <ul className="flex items-center gap-6 text-sm font-medium text-zinc-400">
-                        <li><a href="#about" className="hover:text-blue-400 transition-colors">About</a></li>
-                        <li><a href="#experience" className="hover:text-blue-400 transition-colors">Experience</a></li>
-                        <li><a href="#skills" className="hover:text-blue-400 transition-colors">Skills</a></li>
-                        <li><a href="#projects" className="hover:text-blue-400 transition-colors">Projects</a></li>
-                        <li><a href="#education" className="hover:text-blue-400 transition-colors">Education</a></li>
-                        <li><a href="#blog" className="hover:text-blue-400 transition-colors">Blog</a></li>
+                        {['about', 'experience', 'skills', 'projects', 'education', 'blog'].map((section) => (
+                            <li key={section}>
+                                <a
+                                    href={`/#${section}`}
+                                    onClick={(e) => scrollToSection(e, section)}
+                                    className="hover:text-blue-400 transition-colors capitalize"
+                                >
+                                    {section}
+                                </a>
+                            </li>
+                        ))}
                     </ul>
                 </nav>
             </div>
