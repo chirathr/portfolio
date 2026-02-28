@@ -1,24 +1,16 @@
-"use client";
 import { portfolioData } from "@/data/portfolio";
+import { getSortedPostsData } from "@/lib/blog";
 import { SpotlightCard, GlobalSpotlight } from "@/components/ui/spotlight";
 import { Card } from "@/components/ui/card";
 import { SkillTag } from "@/components/ui/skill-tag";
 import { Github, Linkedin, Mail, ExternalLink, ChevronDown } from "lucide-react";
 import Link from "next/link";
-import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 import { ParticleBackground } from "@/components/ui/particle-background";
+import { Header } from "@/components/ui/header";
 
-export default function Home() {
-  const [scrolled, setScrolled] = useState(false);
-
-  useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 20);
-    };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
+export default async function Home() {
+  const allPostsData = getSortedPostsData();
 
   return (
     <div className="bg-zinc-950 leading-relaxed text-zinc-400 antialiased selection:bg-blue-500/30 selection:text-blue-200 min-h-screen">
@@ -26,28 +18,7 @@ export default function Home() {
       <GlobalSpotlight color="rgba(255, 255, 255, 0.03)" />
 
       {/* Floating Header */}
-      <header
-        className={cn(
-          "fixed top-0 left-0 right-0 z-50 py-4 transition-all duration-300",
-          scrolled ? "bg-zinc-950/80 backdrop-blur-sm border-b border-blue-500/20 shadow-lg" : "bg-transparent"
-        )}
-      >
-        <div className="mx-auto max-w-4xl px-6 md:px-12 flex items-center justify-between">
-          <Link href="/" className="text-xl font-bold tracking-tight text-zinc-200">
-            {portfolioData.personalInfo.name}
-          </Link>
-          <nav className="hidden sm:block">
-            <ul className="flex items-center gap-6 text-sm font-medium text-zinc-400">
-              <li><a href="#about" className="hover:text-blue-400 transition-colors">About</a></li>
-              <li><a href="#experience" className="hover:text-blue-400 transition-colors">Experience</a></li>
-              <li><a href="#skills" className="hover:text-blue-400 transition-colors">Skills</a></li>
-              <li><a href="#projects" className="hover:text-blue-400 transition-colors">Projects</a></li>
-              <li><a href="#education" className="hover:text-blue-400 transition-colors">Education</a></li>
-              <li><a href="#blog" className="hover:text-blue-400 transition-colors">Blog</a></li>
-            </ul>
-          </nav>
-        </div>
-      </header>
+      <Header />
 
       <div className="mx-auto max-w-4xl px-6 pt-32 pb-12 font-sans md:px-12 md:py-32 relative z-10">
 
@@ -233,7 +204,7 @@ export default function Home() {
           <h2 className="text-md font-bold uppercase tracking-widest text-zinc-200 mb-8 flex items-center gap-4">
             <span className="w-8 h-px bg-gradient-to-r from-blue-500/50 via-sky-500/50 to-indigo-500/50"></span> Blog <span className="flex-grow h-px bg-zinc-800/50"></span>
           </h2>
-          {(!portfolioData.blog || portfolioData.blog.length === 0) ? (
+          {(!allPostsData || allPostsData.length === 0) ? (
             <SpotlightCard className="rounded-xl" color="rgba(255, 255, 255, 0.03)">
               <Card className="p-6 sm:p-8 flex items-center justify-center border-dashed border-zinc-800/50 bg-zinc-900/20">
                 <p className="text-sm text-zinc-500 italic">Coming soon...</p>
@@ -241,20 +212,20 @@ export default function Home() {
             </SpotlightCard>
           ) : (
             <ul className="group/list space-y-6">
-              {portfolioData.blog.map((post, idx) => (
-                <li key={idx}>
+              {allPostsData.map((post) => (
+                <li key={post.slug}>
                   <SpotlightCard className="rounded-xl" color="rgba(255, 255, 255, 0.03)">
                     <Card className="p-6 sm:p-8">
                       <div className="flex flex-col gap-2">
                         <header className="z-10 mt-1 flex items-center gap-4 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                          <span>{post.date}</span>
+                          <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
                           <span className="w-1 h-1 rounded-full bg-zinc-700"></span>
                           <span>{post.readTime}</span>
                         </header>
                         <h3 className="z-10 font-medium text-lg leading-snug text-zinc-200">
-                          <a className="inline-flex items-baseline hover:text-blue-400 focus-visible:text-blue-400 group/link transition-colors" href={post.link} target="_blank" rel="noreferrer">
+                          <Link className="inline-flex items-baseline hover:text-blue-400 focus-visible:text-blue-400 group/link transition-colors" href={`/blog/${post.slug}`}>
                             <span>{post.title}</span> <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none ml-2 opacity-0 group-hover/link:opacity-100" />
-                          </a>
+                          </Link>
                         </h3>
                       </div>
                     </Card>
