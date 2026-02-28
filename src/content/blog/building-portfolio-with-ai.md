@@ -1,5 +1,5 @@
 ---
-title: "Abstracting the Boilerplate: How I Made AI Write My Portfolio in a Single Afternoon"
+title: "Abstracting the Boilerplate: How I Made AI Build My Portfolio in a Single Afternoon"
 date: "2026-03-01"
 readTime: "8 min read"
 draft: false
