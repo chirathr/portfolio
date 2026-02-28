@@ -62,7 +62,13 @@ export function getAllPostSlugs() {
 
 export async function getPostData(slug: string) {
     const fullPath = path.join(postsDirectory, `${slug}.md`);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
+    let fileContents;
+
+    try {
+        fileContents = fs.readFileSync(fullPath, 'utf8');
+    } catch (e) {
+        return null;
+    }
 
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);

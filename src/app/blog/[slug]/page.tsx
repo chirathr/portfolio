@@ -23,6 +23,12 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
     const postData = await getPostData(resolvedParams.slug);
 
+    if (!postData) {
+        return {
+            title: "Post Not Found | Chirath R.",
+        };
+    }
+
     return {
         title: `${postData.title} | Chirath R.`,
         description: `Read about ${postData.title} by Chirath R.`,
@@ -46,6 +52,10 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
     }
 
     const postData = await getPostData(resolvedParams.slug);
+
+    if (!postData) {
+        notFound();
+    }
 
     return (
         <div className="bg-zinc-950 min-h-screen text-zinc-400 font-sans selection:bg-blue-500/30 selection:text-blue-200 antialiased">
