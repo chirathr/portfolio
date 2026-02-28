@@ -13,6 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 import { portfolioData } from "@/data/portfolio";
+import { AppNavigationTracker } from "@/components/ui/back-button";
 
 export const metadata: Metadata = {
   title: `${portfolioData.personalInfo.name} | ${portfolioData.personalInfo.tagline}`,
@@ -29,6 +30,7 @@ export default function RootLayout({
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <AppNavigationTracker />
         {children}
       </body>
     </html>

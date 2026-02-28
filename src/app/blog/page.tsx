@@ -1,7 +1,6 @@
 import { getSortedPostsData } from "@/lib/blog";
 import Link from "next/link";
-import { ExternalLink } from "lucide-react";
-import { BackButton } from "@/components/ui/back-button";
+import { ExternalLink, ArrowLeft } from "lucide-react";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -18,7 +17,13 @@ export default function BlogArchive() {
 
                 {/* Navigation */}
                 <nav className="mb-12 flex items-center justify-between">
-                    <BackButton fallback="/" />
+                    <Link
+                        href="/"
+                        className="group flex items-center gap-2 text-sm font-semibold tracking-wide text-zinc-500 hover:text-blue-400 transition-colors uppercase"
+                    >
+                        <ArrowLeft size={16} className="transition-transform group-hover:-translate-x-1" />
+                        Back
+                    </Link>
                     <Link
                         href="/"
                         className="text-sm font-semibold tracking-wide text-zinc-500 hover:text-blue-400 transition-colors uppercase"

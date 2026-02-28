@@ -1,12 +1,30 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
+import { useEffect, useRef } from "react";
+
+export function AppNavigationTracker() {
+    const pathname = usePathname();
+    const isFirstRender = useRef(true);
+
+    useEffect(() => {
+        if (isFirstRender.current) {
+            isFirstRender.current = false;
+            (window as any).isInternalNavigation = false;
+        } else {
+            (window as any).isInternalNavigation = true;
+        }
+    }, [pathname]);
+
+    return null;
+}
+
 export function BackButton({ fallback = "/" }: { fallback?: string }) {
     const router = useRouter();
 
     const handleBack = () => {
-        if (typeof window !== "undefined" && window.history.length > 2) {
+        if (typeof window !== "undefined" && (window as any).isInternalNavigation) {
             router.back();
         } else {
             router.push(fallback);
