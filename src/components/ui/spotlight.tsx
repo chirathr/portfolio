@@ -2,7 +2,13 @@
 import { useState, useEffect } from "react";
 import { cn } from "@/lib/utils";
 
-export function SpotlightCard({ className, children, color = "rgba(29, 78, 216, 0.15)" }: { className?: string, children: React.ReactNode, color?: string }) {
+export interface SpotlightCardProps {
+    className?: string;
+    children: React.ReactNode;
+    color?: string;
+}
+
+export function SpotlightCard({ className, children, color = "rgba(29, 78, 216, 0.15)" }: SpotlightCardProps) {
     const [position, setPosition] = useState({ x: 0, y: 0 });
     const [opacity, setOpacity] = useState(0);
 
@@ -30,7 +36,11 @@ export function SpotlightCard({ className, children, color = "rgba(29, 78, 216, 
     );
 }
 
-export function GlobalSpotlight({ color = "rgba(29, 78, 216, 0.15)" }: { color?: string }) {
+export interface GlobalSpotlightProps {
+    color?: string;
+}
+
+export function GlobalSpotlight({ color = "rgba(29, 78, 216, 0.15)" }: GlobalSpotlightProps) {
     const [position, setPosition] = useState({ x: 0, y: 0 });
 
     useEffect(() => {

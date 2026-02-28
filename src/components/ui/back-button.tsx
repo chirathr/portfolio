@@ -11,20 +11,24 @@ export function AppNavigationTracker() {
     useEffect(() => {
         if (isFirstRender.current) {
             isFirstRender.current = false;
-            (window as any).isInternalNavigation = false;
+            window.isInternalNavigation = false;
         } else {
-            (window as any).isInternalNavigation = true;
+            window.isInternalNavigation = true;
         }
     }, [pathname]);
 
     return null;
 }
 
-export function BackButton({ fallback = "/" }: { fallback?: string }) {
+export interface BackButtonProps {
+    fallback?: string;
+}
+
+export function BackButton({ fallback = "/" }: BackButtonProps) {
     const router = useRouter();
 
     const handleBack = () => {
-        if (typeof window !== "undefined" && (window as any).isInternalNavigation) {
+        if (typeof window !== "undefined" && window.isInternalNavigation) {
             router.back();
         } else {
             router.push(fallback);

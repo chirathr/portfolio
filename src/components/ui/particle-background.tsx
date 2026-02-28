@@ -1,10 +1,20 @@
 "use client";
 import { useEffect, useRef } from "react";
 
+export interface Particle {
+    x: number;
+    y: number;
+    size: number;
+    speedX: number;
+    speedY: number;
+    opacity: number;
+    color: { r: number, g: number, b: number };
+}
+
 export function ParticleBackground() {
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const isScrollingRef = useRef(false);
-    const scrollTimeoutRef = useRef<NodeJS.Timeout>(null);
+    const scrollTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
     useEffect(() => {
         const canvas = canvasRef.current;
@@ -32,15 +42,7 @@ export function ParticleBackground() {
         window.addEventListener("resize", setCanvasSize);
         window.addEventListener("scroll", handleScroll, { passive: true });
 
-        const particles: {
-            x: number;
-            y: number;
-            size: number;
-            speedX: number;
-            speedY: number;
-            opacity: number;
-            color: { r: number, g: number, b: number };
-        }[] = [];
+        const particles: Particle[] = [];
 
         const colors = [
             { r: 255, g: 255, b: 255 }, // white

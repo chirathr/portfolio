@@ -4,9 +4,20 @@ import matter from 'gray-matter';
 import { remark } from 'remark';
 import html from 'remark-html';
 
+export interface BlogFrontmatter {
+    slug: string;
+    title: string;
+    date: string;
+    readTime: string;
+}
+
+export interface BlogPost extends BlogFrontmatter {
+    contentHtml: string;
+}
+
 const postsDirectory = path.join(process.cwd(), 'src/content/blog');
 
-export function getSortedPostsData() {
+export function getSortedPostsData(): BlogFrontmatter[] {
     // Check if directory exists, if not return empty array
     if (!fs.existsSync(postsDirectory)) {
         return [];
@@ -46,7 +57,7 @@ export function getSortedPostsData() {
     });
 }
 
-export function getAllPostSlugs() {
+export function getAllPostSlugs(): { slug: string }[] {
     if (!fs.existsSync(postsDirectory)) {
         return [];
     }
@@ -60,7 +71,7 @@ export function getAllPostSlugs() {
         });
 }
 
-export async function getPostData(slug: string) {
+export async function getPostData(slug: string): Promise<BlogPost | null> {
     const fullPath = path.join(postsDirectory, `${slug}.md`);
     let fileContents;
 

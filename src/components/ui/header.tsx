@@ -1,11 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useState, useEffect, MouseEvent } from "react";
 import { cn } from "@/lib/utils";
 import { portfolioData } from "@/data/portfolio";
 
 export function Header() {
-    const [scrolled, setScrolled] = useState(false);
+    const [scrolled, setScrolled] = useState<boolean>(false);
 
     useEffect(() => {
         const handleScroll = () => {
@@ -15,7 +15,7 @@ export function Header() {
         return () => window.removeEventListener("scroll", handleScroll);
     }, []);
 
-    const scrollToSection = (e: React.MouseEvent<HTMLAnchorElement>, id: string) => {
+    const scrollToSection = (e: MouseEvent<HTMLAnchorElement>, id: string) => {
         // Only override default jump behavior if we are currently on the homepage
         if (window.location.pathname === '/') {
             e.preventDefault();

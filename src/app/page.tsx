@@ -1,13 +1,16 @@
 import { portfolioData } from "@/data/portfolio";
 import { getSortedPostsData } from "@/lib/blog";
-import { SpotlightCard, GlobalSpotlight } from "@/components/ui/spotlight";
-import { Card } from "@/components/ui/card";
-import { SkillTag } from "@/components/ui/skill-tag";
-import { Github, Linkedin, Mail, ExternalLink, ChevronDown } from "lucide-react";
-import Link from "next/link";
-import { cn } from "@/lib/utils";
+import { GlobalSpotlight } from "@/components/ui/spotlight";
+import { Github, Linkedin, Mail, ChevronDown } from "lucide-react";
 import { ParticleBackground } from "@/components/ui/particle-background";
 import { Header } from "@/components/ui/header";
+
+// Feature Sections
+import { ExperienceSection } from "@/components/sections/experience-section";
+import { SkillsSection } from "@/components/sections/skills-section";
+import { ProjectsSection } from "@/components/sections/projects-section";
+import { EducationSection } from "@/components/sections/education-section";
+import { BlogSection } from "@/components/sections/blog-section";
 
 export default async function Home() {
   const allPostsData = getSortedPostsData();
@@ -62,6 +65,7 @@ export default async function Home() {
           </a>
         </section>
 
+        {/* About Section */}
         <section id="about" className="mb-24 scroll-mt-24">
           <h2 className="text-md font-bold uppercase tracking-widest text-zinc-200 mb-8 flex items-center gap-4">
             <span className="w-8 h-px bg-gradient-to-r from-blue-500/50 via-sky-500/50 to-indigo-500/50"></span> About <span className="flex-grow h-px bg-zinc-800/50"></span>
@@ -69,186 +73,12 @@ export default async function Home() {
           <p className="text-lg leading-relaxed">{portfolioData.about}</p>
         </section>
 
-
-
-        <section id="experience" className="mb-24 scroll-mt-24">
-          <h2 className="text-md font-bold uppercase tracking-widest text-zinc-200 mb-8 flex items-center gap-4">
-            <span className="w-8 h-px bg-gradient-to-r from-blue-500/50 via-sky-500/50 to-indigo-500/50"></span> Experience <span className="flex-grow h-px bg-zinc-800/50"></span>
-          </h2>
-          <ol className="group/list space-y-6">
-            {portfolioData.experience.map((exp, idx) => (
-              <li key={idx}>
-                <SpotlightCard className="rounded-xl" color="rgba(255, 255, 255, 0.03)">
-                  <Card className="p-6 sm:p-8">
-                    <div className="flex flex-col sm:flex-row gap-4 sm:gap-8">
-                      <header className="z-10 mt-1 text-sm font-semibold uppercase tracking-wide text-zinc-500 sm:w-1/4 shrink-0">
-                        {exp.period}
-                      </header>
-                      <div className="z-10 sm:w-3/4">
-                        <h3 className="font-medium text-lg leading-snug text-zinc-200 font-sans mb-4">
-                          {exp.title} · <span className="text-blue-300">{exp.company}</span>
-                        </h3>
-                        <ul className="text-sm leading-normal space-y-3 mb-6">
-                          {exp.bullets.map((bullet, i) => (
-                            <li key={i} className="flex"><span className="mr-3 text-sky-400">▹</span><span>{bullet}</span></li>
-                          ))}
-                        </ul>
-                        <ul className="flex flex-wrap gap-2" aria-label="Technologies used">
-                          {exp.tech.map((t) => (
-                            <li key={t}><SkillTag className="bg-blue-500/10 border border-blue-500/20 text-blue-300">{t}</SkillTag></li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </Card>
-                </SpotlightCard>
-              </li>
-            ))}
-          </ol>
-        </section>
-
-        <section id="skills" className="mb-24 scroll-mt-24">
-          <h2 className="text-md font-bold uppercase tracking-widest text-zinc-200 mb-8 flex items-center gap-4">
-            <span className="w-8 h-px bg-gradient-to-r from-blue-500/50 via-sky-500/50 to-indigo-500/50"></span> Skills <span className="flex-grow h-px bg-zinc-800/50"></span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-12 items-start">
-            {portfolioData.skills.map((skillGroup, idx) => (
-              <div
-                key={idx}
-                className={cn(
-                  "flex flex-col justify-start",
-                  idx === portfolioData.skills.length - 1 && portfolioData.skills.length % 2 === 1 ? "md:col-span-2 lg:col-auto" : "",
-                  idx === portfolioData.skills.length - 1 && portfolioData.skills.length % 3 === 2 ? "lg:col-span-2" : "",
-                  idx === portfolioData.skills.length - 1 && portfolioData.skills.length % 3 === 1 ? "lg:col-span-3" : ""
-                )}
-              >
-                <h3 className="font-medium text-sm text-zinc-200 mb-6 uppercase tracking-wider flex items-center gap-2">
-                  <span className="w-2 h-2 rounded-full bg-blue-500/50"></span>
-                  {skillGroup.category}
-                </h3>
-                <ul className="flex flex-wrap gap-3">
-                  {skillGroup.items.map((item) => (
-                    <li key={item}>
-                      <SkillTag className="bg-blue-500/10 border border-blue-500/20 text-blue-300 shadow-sm">{item}</SkillTag>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section id="projects" className="mb-24 scroll-mt-24">
-          <h2 className="text-md font-bold uppercase tracking-widest text-zinc-200 mb-8 flex items-center gap-4">
-            <span className="w-8 h-px bg-gradient-to-r from-blue-500/50 via-sky-500/50 to-indigo-500/50"></span> Projects <span className="flex-grow h-px bg-zinc-800/50"></span>
-          </h2>
-          <ul className="group/list space-y-6">
-            {portfolioData.projects.map((project, idx) => (
-              <li key={idx}>
-                <SpotlightCard className="rounded-xl" color="rgba(255, 255, 255, 0.03)">
-                  <Card className="p-6 sm:p-8">
-                    <div className="flex flex-col md:flex-row gap-6">
-                      <div className="z-10 md:w-1/3 shrink-0">
-                        {project.image ? (
-                          <img src={project.image} alt={project.title} className="rounded-lg border border-zinc-700/50 w-full aspect-video object-cover shadow-lg opacity-80 group-hover/link:opacity-100 transition-opacity" />
-                        ) : (
-                          <div className="rounded-lg border border-zinc-700/50 w-full aspect-video bg-zinc-900 flex items-center justify-center text-zinc-600 shadow-inner">
-                            <span className="text-xs uppercase font-bold tracking-wider">Preview Image</span>
-                          </div>
-                        )}
-                      </div>
-                      <div className="z-10 md:w-2/3">
-                        <h3 className="font-medium text-lg leading-snug text-zinc-200 mb-3">
-                          <a className="inline-flex items-baseline hover:text-blue-400 focus-visible:text-blue-400 group/link transition-colors" href={project.link} target="_blank" rel="noreferrer">
-                            <span>{project.title}</span> <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none ml-2" />
-                          </a>
-                        </h3>
-                        <p className="text-sm leading-relaxed mb-6">{project.description}</p>
-                        <ul className="flex flex-wrap gap-2" aria-label="Technologies used">
-                          {project.tech.map((t) => (
-                            <li key={t}><SkillTag className="bg-blue-500/10 border border-blue-500/20 text-blue-300">{t}</SkillTag></li>
-                          ))}
-                        </ul>
-                      </div>
-                    </div>
-                  </Card>
-                </SpotlightCard>
-              </li>
-            ))}
-          </ul>
-        </section>
-
-        <section id="education" className="mb-24 scroll-mt-24">
-          <h2 className="text-md font-bold uppercase tracking-widest text-zinc-200 mb-8 flex items-center gap-4">
-            <span className="w-8 h-px bg-gradient-to-r from-blue-500/50 via-sky-500/50 to-indigo-500/50"></span> Education <span className="flex-grow h-px bg-zinc-800/50"></span>
-          </h2>
-          <SpotlightCard className="rounded-xl" color="rgba(255, 255, 255, 0.03)">
-            <Card className="p-6 sm:p-8">
-              <div className="flex flex-col sm:flex-row gap-4 sm:gap-8 items-start sm:items-center">
-                <header className="z-10 mt-1 text-sm font-semibold uppercase tracking-wide text-zinc-500 sm:w-1/4 shrink-0">
-                  {portfolioData.education.year}
-                </header>
-                <div className="z-10 sm:w-3/4">
-                  <h3 className="font-medium text-lg leading-snug text-zinc-200 font-sans mb-2">
-                    {portfolioData.education.degree}
-                  </h3>
-                  <p className="text-zinc-400 text-sm mb-2">{portfolioData.education.school}</p>
-                  <p className="text-zinc-500 text-xs font-mono">CGPA: {portfolioData.education.cgpa}</p>
-                </div>
-              </div>
-            </Card>
-          </SpotlightCard>
-        </section>
-
-        <section id="blog" className="mb-24 scroll-mt-24">
-          <h2 className="text-md font-bold uppercase tracking-widest text-zinc-200 mb-8 flex items-center gap-4">
-            <span className="w-8 h-px bg-gradient-to-r from-blue-500/50 via-sky-500/50 to-indigo-500/50"></span> Blog <span className="flex-grow h-px bg-zinc-800/50"></span>
-          </h2>
-          {(!allPostsData || allPostsData.length === 0) ? (
-            <SpotlightCard className="rounded-xl" color="rgba(255, 255, 255, 0.03)">
-              <Card className="p-6 sm:p-8 flex items-center justify-center border-dashed border-zinc-800/50 bg-zinc-900/20">
-                <p className="text-sm text-zinc-500 italic">Coming soon...</p>
-              </Card>
-            </SpotlightCard>
-
-          ) : (
-            <>
-              <ul className="group/list space-y-4">
-                {allPostsData.slice(0, 3).map((post) => (
-                  <li key={post.slug}>
-                    <SpotlightCard className="rounded-xl" color="rgba(255, 255, 255, 0.03)">
-                      <Card className="p-6 sm:p-8">
-                        <div className="flex flex-col gap-2">
-                          <header className="z-10 mt-1 flex items-center gap-4 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                            <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
-                            <span className="w-1 h-1 rounded-full bg-zinc-700"></span>
-                            <span>{post.readTime}</span>
-                          </header>
-                          <h3 className="z-10 font-medium text-lg leading-snug text-zinc-200">
-                            <Link className="inline-flex items-baseline hover:text-blue-400 focus-visible:text-blue-400 group/link transition-colors" href={`/blog/${post.slug}`}>
-                              <span>{post.title}</span> <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none ml-2 opacity-0 group-hover/link:opacity-100" />
-                            </Link>
-                          </h3>
-                        </div>
-                      </Card>
-                    </SpotlightCard>
-                  </li>
-                ))}
-              </ul>
-
-              {allPostsData.length > 3 && (
-                <div className="mt-8 w-full flex justify-end">
-                  <Link
-                    href="/blog"
-                    className="inline-flex items-center gap-2 text-sm font-semibold tracking-wide text-zinc-200 hover:text-blue-400 transition-colors group"
-                  >
-                    View all posts <ExternalLink size={16} className="transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
-                  </Link>
-                </div>
-              )}
-            </>
-          )}
-        </section>
+        {/* Modular Sections */}
+        <ExperienceSection experiences={portfolioData.experience} />
+        <SkillsSection skills={portfolioData.skills} />
+        <ProjectsSection projects={portfolioData.projects} />
+        <EducationSection education={portfolioData.education} />
+        <BlogSection allPostsData={allPostsData} />
 
       </div>
 

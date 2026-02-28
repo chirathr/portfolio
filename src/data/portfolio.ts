@@ -1,4 +1,66 @@
-export const portfolioData = {
+export interface PersonalInfo {
+    name: string;
+    tagline: string;
+    email: string;
+    linkedin: string;
+    github: string;
+    website: string;
+    status: string;
+}
+
+export interface Experience {
+    title: string;
+    company: string;
+    period: string;
+    bullets: string[];
+    tech: string[];
+}
+
+export interface SkillGroup {
+    category: string;
+    items: string[];
+}
+
+export interface Project {
+    title: string;
+    description: string;
+    link: string;
+    image: string;
+    tech: string[];
+}
+
+export interface Education {
+    degree: string;
+    school: string;
+    year: string;
+    cgpa: string;
+}
+
+export interface CareerTimeline {
+    period: string;
+    title: string;
+    details: string;
+}
+
+export interface BlogPostMeta {
+    title: string;
+    date: string;
+    link: string;
+    readTime: string;
+}
+
+export interface PortfolioData {
+    personalInfo: PersonalInfo;
+    about: string;
+    experience: Experience[];
+    skills: SkillGroup[];
+    projects: Project[];
+    education: Education;
+    careerTimeline: CareerTimeline[];
+    blog: BlogPostMeta[];
+}
+
+export const portfolioData: PortfolioData = {
     personalInfo: {
         name: "Chirath R",
         tagline: "Senior Engineer & Technical Lead",
@@ -130,5 +192,5 @@ export const portfolioData = {
                 "4 engineers, 3 mentee promotions, critical migrations, company-wide gateway ownership",
         },
     ],
-    blog: [] as { title: string; date: string; link: string; readTime: string; }[]
+    blog: [],
 };
