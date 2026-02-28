@@ -43,24 +43,30 @@ export default function BlogArchive() {
                 </header>
 
                 {/* Feed */}
-                <ul className="group/list divide-y divide-zinc-800/50">
-                    {allPostsData.map((post) => (
-                        <li key={post.slug} className="py-8 first:pt-0 border-zinc-800">
-                            <div className="flex flex-col gap-3">
-                                <header className="z-10 mt-1 flex items-center gap-4 text-xs font-semibold uppercase tracking-wide text-zinc-500">
-                                    <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
-                                    <span className="w-1 h-1 rounded-full bg-zinc-700"></span>
-                                    <span>{post.readTime}</span>
-                                </header>
-                                <h2 className="z-10 font-bold text-xl leading-snug text-zinc-200">
-                                    <Link className="inline-flex items-baseline hover:text-blue-400 focus-visible:text-blue-400 group/link transition-colors" href={`/blog/${post.slug}`}>
-                                        <span>{post.title}</span> <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none ml-2 opacity-0 group-hover/link:opacity-100" />
-                                    </Link>
-                                </h2>
-                            </div>
-                        </li>
-                    ))}
-                </ul>
+                {(!allPostsData || allPostsData.length === 0) ? (
+                    <div className="py-16 md:py-24 flex flex-col items-center justify-center border-dashed border border-zinc-800/50 bg-zinc-900/20 rounded-xl">
+                        <p className="text-zinc-500 italic text-lg">Coming soon...</p>
+                    </div>
+                ) : (
+                    <ul className="group/list divide-y divide-zinc-800/50">
+                        {allPostsData.map((post) => (
+                            <li key={post.slug} className="py-8 first:pt-0 border-zinc-800">
+                                <div className="flex flex-col gap-3">
+                                    <header className="z-10 mt-1 flex items-center gap-4 text-xs font-semibold uppercase tracking-wide text-zinc-500">
+                                        <time dateTime={post.date}>{new Date(post.date).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}</time>
+                                        <span className="w-1 h-1 rounded-full bg-zinc-700"></span>
+                                        <span>{post.readTime}</span>
+                                    </header>
+                                    <h2 className="z-10 font-bold text-xl leading-snug text-zinc-200">
+                                        <Link className="inline-flex items-baseline hover:text-blue-400 focus-visible:text-blue-400 group/link transition-colors" href={`/blog/${post.slug}`}>
+                                            <span>{post.title}</span> <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none ml-2 opacity-0 group-hover/link:opacity-100" />
+                                        </Link>
+                                    </h2>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                )}
 
                 {/* Footer */}
                 <footer className="mt-24 pt-8 border-t border-zinc-800/50 flex justify-between items-center text-sm text-zinc-500">

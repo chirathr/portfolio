@@ -2,14 +2,25 @@ import { getAllPostSlugs, getPostData } from "@/lib/blog";
 import Link from "next/link";
 import { BackButton } from "@/components/ui/back-button";
 import { Metadata } from "next";
+import { notFound } from "next/navigation";
 
 export async function generateStaticParams() {
     const posts = getAllPostSlugs();
+    if (posts.length === 0) {
+        return [{ slug: "__empty__" }];
+    }
     return posts;
 }
 
 export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
     const resolvedParams = await params;
+
+    if (resolvedParams.slug === "__empty__") {
+        return {
+            title: "Post Not Found | Chirath R.",
+        };
+    }
+
     const postData = await getPostData(resolvedParams.slug);
 
     return {
@@ -29,6 +40,11 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
     const resolvedParams = await params;
+
+    if (resolvedParams.slug === "__empty__") {
+        notFound();
+    }
+
     const postData = await getPostData(resolvedParams.slug);
 
     return (
