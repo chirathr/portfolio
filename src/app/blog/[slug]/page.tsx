@@ -1,12 +1,30 @@
 import { getAllPostSlugs, getPostData } from "@/lib/blog";
-import { ParticleBackground } from "@/components/ui/particle-background";
-import { GlobalSpotlight } from "@/components/ui/spotlight";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
+import { Metadata } from "next";
 
 export async function generateStaticParams() {
     const posts = getAllPostSlugs();
     return posts;
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+    const resolvedParams = await params;
+    const postData = await getPostData(resolvedParams.slug);
+
+    return {
+        title: `${postData.title} | Chirath R.`,
+        description: `Read about ${postData.title} by Chirath R.`,
+        openGraph: {
+            title: `${postData.title} | Chirath R.`,
+            type: "article",
+            publishedTime: postData.date,
+        },
+        twitter: {
+            card: "summary_large_image",
+            title: postData.title,
+        }
+    };
 }
 
 export default async function BlogPost({ params }: { params: Promise<{ slug: string }> }) {
@@ -15,8 +33,7 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
 
     return (
         <div className="bg-zinc-950 min-h-screen text-zinc-400 font-sans selection:bg-blue-500/30 selection:text-blue-200 antialiased">
-            <ParticleBackground />
-            <GlobalSpotlight color="rgba(255, 255, 255, 0.03)" />
+
 
             <div className="mx-auto max-w-3xl px-6 py-12 md:py-24 relative z-10">
 
