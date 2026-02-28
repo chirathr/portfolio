@@ -5,7 +5,7 @@ import Link from "next/link";
 import { BlogFrontmatter } from "@/lib/blog";
 
 export interface BlogSectionProps {
-    allPostsData: BlogFrontmatter[];
+    allPostsData: (BlogFrontmatter & { slug: string })[];
 }
 
 export function BlogSection({ allPostsData }: BlogSectionProps) {

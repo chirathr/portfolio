@@ -2,12 +2,12 @@
 title: "Abstracting the Boilerplate: How I Made AI Write My Portfolio in a Single Afternoon"
 date: "2026-03-01"
 readTime: "8 min read"
-draft: true
+draft: false
 ---
 
 I'm a full-stack engineer, but I've spent most of my career focused on backend work - APIs, distributed systems, infrastructure. I can write CSS, but I'm not a designer. When it came time to finally update my personal portfolio, I hit the classic developer wall: the code part? Easy. Making it *look* good? Not so much!
 
-Instead of spending weekends fighting with design decisions or settling for another generic template, I decided to try building it with an AI coding agent. A few hours later, I had a fully working portfolio and blog, deployed and live.
+Instead of spending my weekend fighting with design decisions or settling for another generic template, I decided to try building it with an AI coding agent. A few hours later, I had a fully working portfolio and blog, deployed and live.
 
 This is what that process actually looked like, rough edges and all.
 
@@ -66,7 +66,7 @@ Here are a few things I built:
 This wasn't a magic wand. AI-generated code has quirks, and if you don't review what it produces, you'll end up with problems. Here are a few I hit:
 
 ### Messy First-Pass Code
-The agent's initial code was monolithic - a 260-line landing page with loose types everywhere. I had to stop and do a cleanup pass: extract components, add proper TypeScript interfaces, and separate the data layer. This is normal and expected. Think of AI output as a rough draft, not a final version.
+The agent's initial code was monolithic - a single landing page with loose types everywhere. I had to stop and do a cleanup pass: extract components, add proper TypeScript interfaces, and separate the data layer. This is normal and expected. Think of AI output as a rough draft, not a final version.
 
 ### A Next.js Static Export Gotcha
 When using `output: 'export'` for static hosting (like GitHub Pages), Next.js throws errors for dynamic routes during local development. I had to conditionally set the output mode based on `NODE_ENV` - static for production builds, standard for local dev.

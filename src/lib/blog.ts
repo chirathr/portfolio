@@ -2,7 +2,9 @@ import fs from 'fs';
 import path from 'path';
 import matter from 'gray-matter';
 import { remark } from 'remark';
-import html from 'remark-html';
+import remarkRehype from 'remark-rehype';
+import rehypePrettyCode from 'rehype-pretty-code';
+import rehypeStringify from 'rehype-stringify';
 
 export interface BlogFrontmatter {
     title: string;
@@ -97,9 +99,14 @@ export async function getPostData(slug: string): Promise<BlogPost | null> {
     // Use gray-matter to parse the post metadata section
     const matterResult = matter(fileContents);
 
-    // Use remark to convert markdown into HTML string
+    // Use remark and rehype to convert markdown into HTML string with syntax highlighting
     const processedContent = await remark()
-        .use(html)
+        .use(remarkRehype)
+        .use(rehypePrettyCode, {
+            theme: 'poimandres',
+            keepBackground: true,
+        })
+        .use(rehypeStringify)
         .process(matterResult.content);
     const contentHtml = processedContent.toString();
 

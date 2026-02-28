@@ -3,6 +3,7 @@ import Link from "next/link";
 import { BackButton } from "@/components/ui/back-button";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
+import { CodeCopyButtons } from "@/components/ui/code-copy-buttons";
 
 export const dynamicParams = false;
 
@@ -98,14 +99,19 @@ export default async function BlogPost({ params }: { params: Promise<{ slug: str
           prose-headings:text-zinc-200 prose-headings:font-bold prose-headings:tracking-tight
           prose-a:text-blue-400 hover:prose-a:text-blue-300 prose-a:no-underline hover:prose-a:underline
           prose-strong:text-zinc-200 prose-strong:font-semibold
-          prose-code:text-sky-300 prose-code:bg-sky-900/20 prose-code:px-1.5 prose-code:py-0.5 prose-code:rounded prose-code:before:content-none prose-code:after:content-none
-          prose-pre:bg-zinc-900/80 prose-pre:border prose-pre:border-zinc-800 prose-pre:shadow-xl
-          prose-blockquote:border-l-blue-500 prose-blockquote:bg-zinc-900/30 prose-blockquote:px-6 prose-blockquote:py-2 prose-blockquote:text-zinc-300 prose-blockquote:not-italic prose-blockquote:rounded-r-lg
+          prose-code:font-mono prose-code:text-[0.9em] prose-code:before:content-none prose-code:after:content-none
+          prose-pre:border prose-pre:border-zinc-800/80 prose-pre:shadow-2xl prose-pre:rounded-xl prose-pre:p-0
+          prose-pre:scrollbar-thin prose-pre:scrollbar-track-transparent prose-pre:scrollbar-thumb-zinc-700/50 hover:prose-pre:scrollbar-thumb-zinc-600/80
+          [&_pre]:!bg-[#1b1e28] [&_pre]:p-4 [&_code]:bg-transparent [&_code]:p-0
+          [&_:not(pre)>code]:text-zinc-300 [&_:not(pre)>code]:bg-zinc-800/50 [&_:not(pre)>code]:px-1.5 [&_:not(pre)>code]:py-0.5 [&_:not(pre)>code]:rounded [&_:not(pre)>code]:border [&_:not(pre)>code]:border-zinc-700/50
+          prose-blockquote:border-l-blue-500 prose-blockquote:bg-zinc-900/30 prose-blockquote:px-6 prose-blockquote:py-4 prose-blockquote:text-zinc-300 prose-blockquote:not-italic prose-blockquote:rounded-r-xl
           prose-hr:border-zinc-800
           prose-li:marker:text-blue-500
           leading-relaxed text-zinc-300"
                     dangerouslySetInnerHTML={{ __html: postData.contentHtml }}
                 />
+
+                <CodeCopyButtons />
 
                 {/* Footer */}
                 <footer className="mt-24 pt-8 border-t border-zinc-800/50 flex justify-between items-center text-sm text-zinc-500">
