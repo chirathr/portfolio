@@ -5,19 +5,20 @@ import { remark } from 'remark';
 import html from 'remark-html';
 
 export interface BlogFrontmatter {
-    slug: string;
     title: string;
     date: string;
     readTime: string;
+    draft?: boolean;
 }
 
 export interface BlogPost extends BlogFrontmatter {
+    slug: string;
     contentHtml: string;
 }
 
 const postsDirectory = path.join(process.cwd(), 'src/content/blog');
 
-export function getSortedPostsData(): BlogFrontmatter[] {
+export function getSortedPostsData(): (BlogFrontmatter & { slug: string })[] {
     // Check if directory exists, if not return empty array
     if (!fs.existsSync(postsDirectory)) {
         return [];
@@ -38,14 +39,18 @@ export function getSortedPostsData(): BlogFrontmatter[] {
             // Use gray-matter to parse the post metadata section
             const matterResult = matter(fileContents);
 
+            // Skip draft posts in production.
+            if (process.env.NODE_ENV === 'production' && matterResult.data.draft === true) {
+                return null;
+            }
+
             // Combine the data with the id
             return {
                 slug,
-                title: matterResult.data.title as string,
-                date: matterResult.data.date as string,
-                readTime: matterResult.data.readTime as string,
+                ...(matterResult.data as BlogFrontmatter),
             };
-        });
+        })
+        .filter((post): post is (BlogFrontmatter & { slug: string }) => post !== null);
 
     // Sort posts by date
     return allPostsData.sort((a, b) => {
@@ -65,10 +70,18 @@ export function getAllPostSlugs(): { slug: string }[] {
     return fileNames
         .filter((fileName) => fileName.endsWith('.md'))
         .map((fileName) => {
-            return {
-                slug: fileName.replace(/\.md$/, ''),
-            };
-        });
+            const slug = fileName.replace(/\.md$/, '');
+            const fullPath = path.join(postsDirectory, fileName);
+            const fileContents = fs.readFileSync(fullPath, 'utf8');
+            const matterResult = matter(fileContents);
+
+            if (process.env.NODE_ENV === 'production' && matterResult.data.draft === true) {
+                return null;
+            }
+
+            return { slug };
+        })
+        .filter((post): post is { slug: string } => post !== null);
 }
 
 export async function getPostData(slug: string): Promise<BlogPost | null> {
