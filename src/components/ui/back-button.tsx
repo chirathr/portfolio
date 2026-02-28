@@ -12,7 +12,7 @@ export function BackButton() {
         if (typeof window !== "undefined") {
             const referrer = document.referrer;
             if (!referrer || !referrer.includes(window.location.host)) {
-                router.push("/blog");
+                router.push("/");
                 return;
             }
         }
