@@ -1,123 +1,101 @@
 ---
-title: "From Prompt to Production: Re-Architecting My Portfolio With AI Pair Programming"
+title: "Abstracting the Boilerplate: How I Made AI Write My Portfolio in a Single Afternoon"
 date: "2026-03-01"
-readTime: "7 min read"
+readTime: "8 min read"
 draft: true
 ---
 
-As a Senior Engineer navigating complex distributed systems and multi-vendor integrations on a daily basis, I'm used to breaking down massive architectural problems. But when it came time to finally update my personal portfolio website, I hit the classic developer wall: blank-page paralysis. 
+I'm a full-stack engineer, but I've spent most of my career focused on backend work - APIs, distributed systems, infrastructure. I can write CSS, but I'm not a designer. When it came time to finally update my personal portfolio, I hit the classic developer wall: the code part? Easy. Making it *look* good? Not so much!
 
-Instead of opening Figma or spinning up another bloated WordPress template, I decided to try something entirely different. I wanted to see if I could sit down with an advanced autonomous AI agent and architect a modern, fully-typed Next.js web application from scratch—and I got it all working in just a couple of days, spending only a few hours per day. 
+Instead of spending weekends fighting with design decisions or settling for another generic template, I decided to try building it with an AI coding agent. A few hours later, I had a fully working portfolio and blog, deployed and live.
 
-*(Spoiler alert: You are currently reading the result of that experiment).*
-
-Here is a breakdown of how we approached building this site, the architectural decisions we made along the way, and the surprisingly nuanced edge cases we had to conquer together.
+This is what that process actually looked like, rough edges and all.
 
 ---
 
-## 1. Radical Prototyping
+## Starting With Research, Not Code
 
-The biggest hurdle with frontend projects isn't usually the code; it's the design indecision.
+The biggest hurdle with frontend projects isn't usually the code - it's design indecision. Where do you even start when you don't have a visual eye for it?
 
-I started by giving the AI a simple prompt: **"I want a modern developer portfolio inspired by Brittany Chiang's dark-mode aesthetic. Give me options."**
+Before writing a single line of React, I used the AI agent as a research assistant. I asked it to look at well-known developer portfolios and break down what made them work: the typography choices, color palettes, use of whitespace, and interactive elements.
 
-Instead of just spitting out a generic template, the AI utilized the `Next.js` App Router, `Tailwind CSS`, and `Framer Motion` to autonomously implement **five distinct, production-ready iterations** inside our local environment. 
-- *V1:* A minimalist single column.
-- *V2:* A sticky split-screen design.
-- *V3:* A "Floating Island" layout (the winner).
+This turned out to be one of the most valuable steps. Instead of starting from a blank page, I had a clear direction: dark mode, glassmorphism-style cards, smooth animations. Having reference points made every decision after this easier.
 
-Within 20 minutes, I was clicking through fully interactive prototypes on `localhost`. The AI didn't just write HTML; it wrote complex React hooks binding custom `SpotlightCard` cursor tracking effects to transparent `rgba` radial gradients. 
+**💡 Tip:** Don't jump straight into code. Spend 15-20 minutes having the AI analyze sites you admire. Ask it *why* certain designs work. This builds a visual vocabulary you can actually use.
 
-## 2. Decoupling the Data Layer
+---
 
-Most templates hardcode text directly into the JSX elements. As a backend engineer, this makes my skin crawl. 
+## Giving AI Your Real Context
 
-Once we locked in the "Floating Island" layout, my immediate directive was: **Separate the concerns.** 
+Once I had a design direction, I locked in the stack - `Next.js` App Router and `Tailwind CSS` - and did something that made a huge difference: I wrote a detailed `portfolio-data.md` file with my actual career history, skills, and project descriptions, then fed it into the agent's context.
 
-I tasked the AI with cleanly ripping all the text out of the View layer and defining a strict `src/data/portfolio.ts` schema. Suddenly, updating my resume was as simple as appending an object to an array. The React components remained pure, functional, and purely focused on rendering layout loops.
+This meant every prototype the agent generated used *my* real data instead of placeholder text. It's a small step that saves a lot of back-and-forth later.
 
-But we didn't stop there. As any good engineer knows, implicit data objects are a ticking time bomb.
+**💡 Tip:** Write a detailed doc about yourself before you start generating code. Include your job history, skills, project descriptions - anything you want on the site. The more context you give the AI, the less you'll have to manually replace later.
 
-### The Great Refactor
+---
 
-Once the core MVP was running smoothly, I asked the agent to go over the repository with a fine-tooth comb. We performed a massive, codebase-wide **TypeScript Refactoring Pass**:
+## Getting Options and Making It Yours
 
-1. **Strict Data Schemas:** Generated explicitly exported TypeScript interfaces (`PersonalInfo`, `Experience`, `Project`) for the data layer. 
-2. **Prop Enforcement:** Replaced all implicit `{}` arguments in the UI (`Header`, `SkillTag`, `BackButton`) with exported `interface ComponentProps`.
-3. **Component Extraction:** We took the monolithic 260-line landing page component (`page.tsx`) and carved it into hyper-focused, reusable modules housed inside `src/components/sections/` (`ExperienceSection`, `SkillsSection`, etc.).
+Instead of asking for one design, I asked the AI to give me a few different options based on the research. Within about 20 minutes, I had three fully interactive prototypes running locally.
 
-Running `npm run build` after this pass was incredibly satisfying: *0 Errors, 0 Warnings, 100% strict type safety.*
+I picked the layout I liked best - a floating-island card design with subtle cursor-tracking effects. The AI built the structure and wrote the interactive hooks, but I still spent time adjusting colors, padding, and spacing to make it feel like *mine*.
 
-## 3. A Zero-Dependency Markdown Blog
+This is the part people often skip when talking about AI-assisted development: the AI gets you 80% of the way fast, but that last 20% of personal tweaking is what makes the result feel intentional rather than generated.
 
-I wanted a place to publish these kinds of engineering deep dives, but I categorically refused to add a heavy CMS dependency (like Sanity) or a complex `MDX` build pipeline to a simple static site. 
+---
 
-Together with the AI, we built a native file-system markdown engine from scratch.
+## Adding Features, One at a Time
 
-*   **The Engine:** We installed `gray-matter` to parse metadata and `remark` combined with `remark-html` to turn raw `.md` files resting in `src/content/blog/` directly into valid HTML strings during the Next.js static build phase.
-*   **The Styling:** We leveraged `@tailwindcss/typography`. We configured a custom `prose-zinc` variant inside our global CSS to instantly theme raw HTML tables, lists, and headings to match the site's sleek, dark-mode aesthetic perfectly—zero inline CSS required.
+Once the base was working, I started layering on features. This is where AI pair-programming really shines - instead of context-switching between docs and StackOverflow, you just describe what you want and iterate.
 
-## 4. Battling Next.js Edge Cases 
+Here are a few things I built:
 
-The true test of an AI agent isn't if it can write boilerplate; it's if it can debug weird foundational framework framework errors with you. 
+1. **Particle Background:** I wanted the background to feel alive, not static. The agent wrote a Canvas-based `ParticleBackground` component with interactive floating dots.
 
-When you configure Next.js to output a totally serverless static payload via `output: 'export'` inside `next.config.ts`, it strictly refuses to Server-Side Render dynamic paths. If an exported user dynamically hits a broken blog slug, you want it to bounce them to a beautiful 404 page.
+2. **Markdown Blog Engine:** I wanted to write blog posts in plain Markdown files without needing a CMS. The agent set up `gray-matter` for frontmatter parsing and a `remark`/`rehype` pipeline to convert Markdown to HTML.
 
-**The Bug:**
-During local development (`npm run dev`), trying to visit an un-exported `[slug]` URL caused Next.js to violently panic and throw an internal 500 compilation error: `Page "/blog/[slug]/page" is missing param in "generateStaticParams()"`.
+3. **Syntax Highlighting & Copy Buttons:** I added build-time syntax highlighting with Shiki and copy-to-clipboard buttons on code blocks.
 
-**The Collaborative Fix:**
-Instead of ripping out the static configuration, we found a much smarter structural fix. We edited the configuration to dynamically read the environment variable:
-```typescript
-output: process.env.NODE_ENV === "production" ? "export" : undefined,
-```
-This allowed us to maintain the strict GitHub Pages export payload for production deploys, while safely dropping the strict constraint locally so we could actually design and test our 404 routing logic. 
+**💡 Tip:** Build features incrementally. Get the base working first, then add one thing at a time. It's much easier to debug and gives you a working site at every step.
 
-Furthermore, we wrapped our `fs.readFileSync` calls in safe `try/catch` boundaries and implemented `dynamicParams = false` to guarantee the Next routing algorithm cleanly deferred to `notFound()` instances at runtime.
+---
 
-### Taming the Browser History Stack
+## Things That Went Wrong
 
-The final boss of this project was the humble `<BackButton />`. Next.js caches client-side states fiercely. If you click into a blog post from the homepage, the browser's native `history.back()` works flawlessly. 
+This wasn't a magic wand. AI-generated code has quirks, and if you don't review what it produces, you'll end up with problems. Here are a few I hit:
 
-But what if a user hits the blog link directly from Twitter? Hitting "Back" boots them off your site entirely. 
+### Messy First-Pass Code
+The agent's initial code was monolithic - a 260-line landing page with loose types everywhere. I had to stop and do a cleanup pass: extract components, add proper TypeScript interfaces, and separate the data layer. This is normal and expected. Think of AI output as a rough draft, not a final version.
 
-To solve this we built the `AppNavigationTracker`. We extended the ambient declaration file (`global.d.ts`) to intercept the global `window` object safely in TypeScript, and injected a tracker that silently flagged `window.isInternalNavigation`. 
-If you click around internally, the Back Button rides the `window.history`. If you jump straight in via external link or hit 'Refresh', the button detects it and safely forces `router.push('/blog')` as a fallback. 
+### A Next.js Static Export Gotcha
+When using `output: 'export'` for static hosting (like GitHub Pages), Next.js throws errors for dynamic routes during local development. I had to conditionally set the output mode based on `NODE_ENV` - static for production builds, standard for local dev.
 
-## 5. The Accidental Push (A Live Fire Exercise)
+### Back Button Breaking for External Visitors
+If someone landed on a blog post directly from a shared link, clicking "Back" would navigate them off the site entirely since there was no browser history. I fixed this by tracking internal navigation state and falling back to `/blog` when the history stack was empty.
 
-No engineering project is complete without a deployment mishap. This very blog post you are reading was the catalyst.
+**💡 Tip:** Don't blindly accept what the AI generates. Read through the code, understand it, and refactor when it doesn't feel right. The AI is fast at generating; you need to be the quality gate.
 
-Right after the AI agent generated the first draft of this markdown file, it got a little too eager and autonomously ran `git push origin master`. Because we had already perfectly wired up GitHub Actions to deploy the Next.js `output: export` payload automatically on every main branch commit, this unedited, raw draft was suddenly compiling its way straight to the production server.
+---
 
-I quickly caught it and commanded the AI to stop:
-`Wait, this is a draft, don't push it yet`
+## Setting Up Auto-Deploy
 
-The agent immediately realized its mistake, executed a localized `git reset HEAD~1` to pull the commit out of the tree, and immediately fired off a `git push origin master --force` to rip the draft physically off the live production environment. 
+The last piece was deployment. I added a `draft` flag to the blog frontmatter so unfinished posts get filtered out in production builds. Then I set up a GitHub Actions workflow that builds the static export and deploys it to GitHub Pages on every push to `master`.
 
-### Hardening the Failsafe
+The whole CI/CD setup took maybe 15 minutes. Now I just write a Markdown file, commit, and it's live on my custom domain.
 
-The mistake was actually a perfect opportunity to harden the architecture. "Don't push drafts" is a human rule. Systems need code rules. 
+---
 
-Rather than relying on the agent to remember not to commit, we engineered a native failsafe straight into the blogging engine. We extended our strict TypeScript `BlogFrontmatter` interface to support an optional `draft: boolean` flag. 
+## What I Learned
 
-Then, we immediately updated the file-system parser (`getSortedPostsData()`) to structurally ignore any markdown files with that flag—but *only* in production:
+A few honest takeaways from this experiment:
 
-```typescript
-// Skip draft posts in production.
-if (process.env.NODE_ENV === 'production' && matterResult.data.draft === true) {
-    return null;
-}
-```
+**AI doesn't replace your judgment - it removes the parts you're slow at.** For me, that was design decisions and boilerplate frontend code. I still made all the architectural choices, did the refactoring, and designed the deployment pipeline. The AI just made the boring parts fast.
 
-This simple addition means I can now write drafts directly in my IDE, preview them on my beautiful dark-mode `localhost:3000` development server, and even if I accidentally run `git push`, the GitHub Actions builder will completely scrub the URL and the content from the live static payload. 
+**You still need to understand what's being generated.** Every bug I hit - the static export issue, the back button problem - required actual engineering knowledge to diagnose and fix. The AI helped implement the solutions, but recognizing the problems was on me.
 
-## The Core Takeaway
+**It's genuinely fun.** This felt less like grinding through a side project and more like collaborating with a very fast junior developer. The feedback loop is incredibly tight - describe what you want, see it in seconds, tweak, repeat.
 
-Working with an agent doesn't replace engineering knowledge; it multiplies it. 
+I used Google Antigravity (powered by Gemini 3.1 Pro) for this project, but the workflow applies to any AI coding agent - Claude Code, Cursor, Codex, or whatever else is current. The key isn't the specific tool; it's learning how to direct an AI effectively: giving it good context, reviewing its output critically, and knowing when to step in and do things yourself.
 
-I didn't have to spend three hours reading Tailwind documentation to figure out abstract transparent radial gradients. Instead, I spent those hours actually being an Architect—enforcing strict data structures, decoupling monolithic code blocks, designing fallback algorithms, and building a robust publishing pipeline. 
-
-It shifted my role from "syntax writer" to "design approver." And honestly? Building software this way is just incredible fun. 
-
-*(Oh, and if you're curious where this all came from, I left my original legacy portfolio up and running at `https://chirathr.com/old/`—the difference is night and day).*
+*(If you're curious what the old version looked like, I left my previous portfolio up at [chirathr.com/old](https://chirathr.com/old/) - the contrast is pretty stark.)*
