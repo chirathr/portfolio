@@ -4,6 +4,8 @@ import { BackButton } from "@/components/ui/back-button";
 import { Metadata } from "next";
 import { notFound } from "next/navigation";
 
+export const dynamicParams = false;
+
 export async function generateStaticParams() {
     const posts = getAllPostSlugs();
     if (posts.length === 0) {
