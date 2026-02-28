@@ -17,8 +17,14 @@ export default function BlogArchive() {
             <div className="mx-auto max-w-3xl px-6 py-12 md:py-24 relative z-10">
 
                 {/* Navigation */}
-                <nav className="mb-12">
+                <nav className="mb-12 flex items-center justify-between">
                     <BackButton />
+                    <Link
+                        href="/"
+                        className="text-sm font-semibold tracking-wide text-zinc-500 hover:text-blue-400 transition-colors uppercase"
+                    >
+                        Portfolio
+                    </Link>
                 </nav>
 
                 {/* Header */}
