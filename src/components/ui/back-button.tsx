@@ -6,7 +6,7 @@ export function BackButton({ fallback = "/" }: { fallback?: string }) {
     const router = useRouter();
 
     const handleBack = () => {
-        if (typeof window !== "undefined" && window.history.length > 1) {
+        if (typeof window !== "undefined" && window.history.length > 2) {
             router.back();
         } else {
             router.push(fallback);
