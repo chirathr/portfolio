@@ -32,9 +32,15 @@ export function ProjectsSection({ projects }: ProjectsSectionProps) {
                                     </div>
                                     <div className="z-10 md:w-2/3">
                                         <h3 className="font-medium text-lg leading-snug text-zinc-200 mb-3">
-                                            <a className="inline-flex items-baseline hover:text-blue-400 focus-visible:text-blue-400 group/link transition-colors" href={project.link} target="_blank" rel="noreferrer">
-                                                <span>{project.title}</span> <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none ml-2" />
-                                            </a>
+                                            {project.link && project.link !== "#" ? (
+                                                <a className="inline-flex items-baseline hover:text-blue-400 focus-visible:text-blue-400 group/link transition-colors" href={project.link} target="_blank" rel="noreferrer">
+                                                    <span>{project.title}</span> <ExternalLink className="inline-block h-4 w-4 shrink-0 transition-transform group-hover/link:-translate-y-1 group-hover/link:translate-x-1 motion-reduce:transition-none ml-2" />
+                                                </a>
+                                            ) : (
+                                                <span className="inline-flex items-baseline">
+                                                    <span>{project.title}</span>
+                                                </span>
+                                            )}
                                         </h3>
                                         <p className="text-sm leading-relaxed mb-6">{project.description}</p>
                                         <ul className="flex flex-wrap gap-2" aria-label="Technologies used">
