@@ -71,12 +71,12 @@ export const portfolioData: PortfolioData = {
         status: "Open to Opportunities",
     },
     about:
-        "I build resilient distributed systems, developer-first APIs, and high-scale platform infrastructure. With 7 years of engineering experience, I've progressed from Junior Engineer to Team Lead—architecting multi-vendor platforms that rapidly process hundreds of thousands of daily operations. I'm deeply passionate about decoupling complex business logic, mentoring engineering teams, and exploring AI-driven workflows to multiply developer productivity.",
+        "I build resilient distributed systems, developer-first APIs, and high-scale platform infrastructure. With 7 years of engineering experience, I've progressed from Junior Engineer to Team Lead, architecting multi-vendor platforms that rapidly process hundreds of thousands of daily operations. I'm passionate about decoupling complex business logic, mentoring engineering teams, and exploring AI-driven workflows to improve developer productivity.",
     experience: [
         {
             title: "Team Lead",
             company: "Sojern (via Beautifulcode)",
-            period: "Jan 2023 — Present",
+            period: "Jan 2023 - Present",
             bullets: [
                 "Owned 6 API gateway services handling hundreds of thousands of calls/day with async processing, priority queuing, and push notifications",
                 "Designed reusable integration flows enabling bulk migration of thousands of campaigns and assets with zero downtime",
@@ -88,10 +88,10 @@ export const portfolioData: PortfolioData = {
         {
             title: "Senior Engineer",
             company: "Sojern (via Beautifulcode)",
-            period: "Jan 2021 — Dec 2022",
+            period: "Jan 2021 - Dec 2022",
             bullets: [
-                "Architected a multi-vendor orchestration service from scratch (Go, gRPC, GraphQL, PostgreSQL) — idempotent workflows across 6 platforms, reducing setup time from hours to minutes",
-                "Built a configurable Rules Engine — dozens of rules in production — decoupling business rules from application code",
+                "Architected a multi-vendor orchestration service from scratch (Go, gRPC, GraphQL, PostgreSQL) - idempotent workflows across 6 platforms, reducing setup time from hours to minutes",
+                "Built a configurable Rules Engine (dozens of rules in production), decoupling business rules from application code",
                 "Delivered search automation for 2 platforms across 8 languages, plus asset lifecycle management for tens of thousands of entities",
             ],
             tech: ["Go", "gRPC", "GraphQL", "PostgreSQL"],
@@ -99,7 +99,7 @@ export const portfolioData: PortfolioData = {
         {
             title: "Software Engineer",
             company: "Sojern (via Beautifulcode)",
-            period: "Dec 2018 — Dec 2020",
+            period: "Dec 2018 - Dec 2020",
             bullets: [
                 "Built end-to-end entity management workflows (React, Python/Django) across a 5-service microservices architecture",
                 "Led frontend migration from HAML/jQuery to Vue.js",
