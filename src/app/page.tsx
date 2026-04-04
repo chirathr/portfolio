@@ -31,11 +31,11 @@ export default async function Home() {
             <h1 className="text-5xl font-bold tracking-tight text-zinc-200 sm:text-7xl mb-6">
               Hi, I'm <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-400 to-indigo-400">{portfolioData.personalInfo.name.split(' ')[0]}</span>.
             </h1>
-            <h2 className="text-xl font-medium tracking-tight text-zinc-300 sm:text-2xl mb-4 max-w-2xl">
+            <h2 className="text-2xl font-medium tracking-tight text-zinc-300 sm:text-3xl mb-4 max-w-2xl">
               {portfolioData.personalInfo.tagline}
             </h2>
-            <p className="text-sm md:text-base text-zinc-400 max-w-xl mb-8 leading-relaxed">
-              {portfolioData.about.split('.')[0]}.
+            <p className="text-base md:text-lg text-zinc-400 max-w-xl mb-8 leading-relaxed">
+              {portfolioData.personalInfo.subtitle}
             </p>
             <ul className="flex items-center gap-6 text-xl">
               <li>

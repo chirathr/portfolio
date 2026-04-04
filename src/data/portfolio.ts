@@ -1,6 +1,7 @@
 export interface PersonalInfo {
     name: string;
     tagline: string;
+    subtitle: string;
     email: string;
     linkedin: string;
     github: string;
@@ -63,7 +64,8 @@ export interface PortfolioData {
 export const portfolioData: PortfolioData = {
     personalInfo: {
         name: "Chirath R",
-        tagline: "Senior Engineer & Technical Lead",
+        tagline: "Software Engineer",
+        subtitle: "Backend engineer who likes building scalable systems and clean frontends, with a side of AI.",
         email: "chirath.02@gmail.com",
         linkedin: "https://linkedin.com/in/chirathr",
         github: "https://github.com/chirathr",
@@ -71,71 +73,75 @@ export const portfolioData: PortfolioData = {
         status: "Open to Opportunities",
     },
     about:
-        "I build resilient distributed systems, developer-first APIs, and high-scale platform infrastructure. With 7 years of engineering experience, I've progressed from Junior Engineer to Team Lead, architecting multi-vendor platforms that rapidly process hundreds of thousands of daily operations. I'm passionate about decoupling complex business logic, mentoring engineering teams, and exploring AI-driven workflows to improve developer productivity.",
+        "I'm a backend engineer who's been building distributed systems for 7+ years. I care about clean, scalable code, whether that's a Go service or a React frontend. I've grown from IC to Engineering Lead, and AI is a big part of how I work now. When I'm not coding, I'm probably on a road trip somewhere.",
     experience: [
         {
-            title: "Team Lead",
-            company: "Sojern (via Beautifulcode)",
-            period: "Jan 2023 - Present",
+            title: "Engineering Lead",
+            company: "Sojern (via BeautifulCode LLP)",
+            period: "Apr 2023 - Mar 2026",
             bullets: [
-                "Owned 6 API gateway services handling hundreds of thousands of calls/day with async processing, priority queuing, and push notifications",
-                "Designed reusable integration flows enabling bulk migration of thousands of campaigns and assets with zero downtime",
-                "Built an async bulk update pipeline via Pub/Sub powering daily optimization across tens of thousands of active entities",
-                "Managed 4 engineers; mentored 3 juniors to Senior-level promotions over 3-4 years",
+                "Led integration of 6 advertising platforms: API mapping, workflow architecture, cross-team dependencies, and technical scoping",
+                "Managed 4 engineers. Mentored 3 juniors to Senior-level promotions",
+                "Owned 6 API gateway services handling hundreds of thousands of calls/day with async processing, rate limiting, and event-driven notifications via Pub/Sub. Set up Datadog tracing and on-call alerting",
+                "Shipped a Bulk Campaign Updater coordinating daily updates across 10k+ entities on 6 platform APIs via Pub/Sub, each with different rate limits and error handling",
+                "Created campaign and ad creative workflows for The Trade Desk and Meta/Facebook. Bulk-migrated thousands of campaigns that were previously manual",
+                "Designed campaign creation frontends in React/TypeScript for Xandr and Facebook. Multi-step forms with drag-and-drop uploads and client-side thumbnail generation, reused across 4+ integrations",
             ],
-            tech: ["Go", "GCP", "Pub/Sub"],
+            tech: ["Go", "GCP", "Pub/Sub", "React", "TypeScript", "GraphQL"],
         },
         {
             title: "Senior Engineer",
-            company: "Sojern (via Beautifulcode)",
-            period: "Jan 2021 - Dec 2022",
+            company: "Sojern",
+            period: "Apr 2021 - Mar 2023",
             bullets: [
-                "Architected a multi-vendor orchestration service from scratch (Go, gRPC, GraphQL, PostgreSQL) - idempotent workflows across 6 platforms, reducing setup time from hours to minutes",
-                "Built a configurable Rules Engine (dozens of rules in production), decoupling business rules from application code",
-                "Delivered search automation for 2 platforms across 8 languages, plus asset lifecycle management for tens of thousands of entities",
+                "Built the campaign management service from scratch in Go (gRPC, GraphQL, PostgreSQL) with idempotent, queue-based workflows. Cut setup time from hours to minutes",
+                "Created ad creative workflows for 3 advertising platforms, managing 10k+ ad creatives with daily audit syncs",
+                "Wrote a Python-based rules engine so non-engineering users could define campaign rules via text, dropdowns, or code. Dozens of rules in production",
+                "Automated Search campaigns for Google Ads and Bing Ads, later extending to 8 languages for international markets",
             ],
-            tech: ["Go", "gRPC", "GraphQL", "PostgreSQL"],
+            tech: ["Go", "gRPC", "GraphQL", "PostgreSQL", "Python"],
         },
         {
             title: "Software Engineer",
-            company: "Sojern (via Beautifulcode)",
-            period: "Dec 2018 - Dec 2020",
+            company: "Sojern",
+            period: "Oct 2018 - Mar 2021",
             bullets: [
-                "Built end-to-end entity management workflows (React, Python/Django) across a 5-service microservices architecture",
-                "Led frontend migration from HAML/jQuery to Vue.js",
-                "Built internal operations tool with search, filtering, bulk actions, and automated reconciliation",
+                "Shipped campaign creation and management workflows across a 5-microservice architecture",
+                "Built the Campaign Manager UI in React/TypeScript: search, filtering, data tables, bulk update forms, and CSV upload for internal operations",
+                "Led frontend migration from HAML/jQuery to a modern Single Page Application",
             ],
-            tech: ["React", "Python", "Django", "Vue.js"],
+            tech: ["React", "TypeScript", "Python", "Django"],
         },
     ],
     skills: [
-        { category: "Languages", items: ["Go", "Python", "TypeScript", "SQL"] },
+        { category: "Languages", items: ["Go", "Python", "JavaScript", "TypeScript", "SQL"] },
         {
-            category: "Frameworks",
-            items: [
-                "gRPC",
-                "REST",
-                "GraphQL",
-                "Django",
-                "React",
-                "Vue.js",
-            ],
+            category: "Frameworks & Tools",
+            items: ["React", "gRPC", "REST", "GraphQL", "Hasura", "Django", "Protocol Buffers", "Jest"],
         },
         {
             category: "Cloud & Infra",
             items: [
                 "GCP",
+                "AWS",
                 "Kubernetes",
                 "Terraform",
+                "Kafka",
                 "Redis",
                 "Docker",
             ],
         },
         { category: "Databases", items: ["PostgreSQL", "BigQuery", "MySQL"] },
+        { category: "CI/CD", items: ["Jenkins", "Codefresh", "Docker"] },
+        {
+            category: "AI Tools",
+            items: ["Claude Code", "Cursor"],
+        },
         {
             category: "Domains",
             items: [
                 "Distributed Systems",
+                "Full-Stack Development",
                 "Microservices",
                 "Event-Driven Architecture",
                 "API Design",
@@ -145,9 +151,9 @@ export const portfolioData: PortfolioData = {
     ],
     projects: [
         {
-            title: "AI-Powered Rule Generation (Hackathon 2025)",
+            title: "AI Rule Generator (Hackathon 2025)",
             description:
-                "AI agent using Google Gemini API that generates configuration rules and Python code from natural language prompts. Context-aware injection of available data fields. Reduced rule creation time from hours to minutes.",
+                "AI agent using Google Gemini API that generates configuration rules and Python code from natural language prompts. Injects available data fields as context so generated rules are valid out of the box.",
             link: "#",
             image: "/projects/ai_rule_generation.jpg",
             tech: ["Python", "Google Gemini API"],
@@ -155,7 +161,7 @@ export const portfolioData: PortfolioData = {
         {
             title: "AI Workout Planner (WIP)",
             description:
-                "Side project built with Claude Code. Takes user details, equipment, and preferences to generate AI-powered personalized workout plans.",
+                "Side project built with Claude Code. Takes user details, equipment, and preferences to generate personalized workout plans.",
             link: "#",
             image: "/projects/ai_workout_planner.jpg",
             tech: ["TypeScript", "Next.js", "AI Prompts"],
@@ -169,27 +175,22 @@ export const portfolioData: PortfolioData = {
     },
     careerTimeline: [
         {
-            period: "2018 - 2020",
-            title: "Junior SDE I",
+            period: "2018 - 2021",
+            title: "Software Engineer",
             details:
-                "Frontend migration, campaign dashboard, first microservice work",
-        },
-        {
-            period: "2020 - 2021",
-            title: "SDE II",
-            details: "Go adoption, built gateway services, vendor integration",
+                "Frontend migration, Campaign Manager UI, 5-microservice platform",
         },
         {
             period: "2021 - 2023",
             title: "Senior Engineer",
             details:
-                "Architected platform from scratch, Rules Engine, 6 platform integrations",
+                "Created campaign service from scratch in Go, Rules Engine, Search automation",
         },
         {
-            period: "2023 - 2025",
-            title: "Team Lead",
+            period: "2023 - 2026",
+            title: "Engineering Lead",
             details:
-                "4 engineers, 3 mentee promotions, critical migrations, company-wide gateway ownership",
+                "6 platform integrations, 4 engineers, gateway ownership, cross-team data patterns",
         },
     ],
     blog: [],
